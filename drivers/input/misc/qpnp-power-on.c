@@ -204,6 +204,8 @@ module_param_named(
 	ship_mode_en, pon_ship_mode_en, int, 0600
 );
 
+struct qpnp_pon *pm_pon;
+
 static struct qpnp_pon *sys_reset_dev;
 static DEFINE_SPINLOCK(spon_list_slock);
 static LIST_HEAD(spon_dev_list);
@@ -2029,6 +2031,16 @@ static void qpnp_pon_debugfs_init(struct platform_device *pdev)
 static void qpnp_pon_debugfs_remove(struct platform_device *pdev)
 {}
 #endif
+
+void op_pm8998_regmap_register(struct qpnp_pon *pon)
+{
+	if (pm_pon) {
+		pm_pon = pon;
+		pr_err("multiple battery gauge called\n");
+	} else {
+		pm_pon = pon;
+	}
+}
 
 static int read_gen2_pon_off_reason(struct qpnp_pon *pon, u16 *reason,
 					int *reason_index_offset)

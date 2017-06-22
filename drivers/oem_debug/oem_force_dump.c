@@ -25,7 +25,7 @@ static struct work_struct smg_work;
 
 #define MAX_MSGSIZE 1024
 static int message_state = 0;
-extern int  msm_serial_oem_init(void);
+extern int msm_serial_oem_init(void);
 
 void send_msg(char *message);
 /*
